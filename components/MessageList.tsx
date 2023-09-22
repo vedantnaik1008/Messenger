@@ -42,7 +42,7 @@ const MessageList = ({initialMessages}: Props) => {
   }, [mutate, messages,clientPusher])
 
   return (
-    <div className="space-y-5 px-5 pt-8 pb-32 max-w-2xl xl:max-w-4xl max-auto">
+    <div className="space-y-5 px-5 pt-8 pb-32  max-auto">
       {(messages || initialMessages).map((message)=> (
         <MessageComponent key={message.id} message={message} />
       ))}
