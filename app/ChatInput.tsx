@@ -5,6 +5,9 @@ import {v4 as uuid} from 'uuid'
 import  useSWR  from "swr"
 import fetcher from "@/utils/fetchMessages"
 import { useUser } from "@clerk/nextjs";
+import axios from "axios"
+
+
 
 const ChatInput = () => {
     const [input, setInput] = useState('')
@@ -39,13 +42,12 @@ const ChatInput = () => {
         
         const uploadMessageToUpstash = async () => {
             try {
-                const data = await fetch("/api/addMessage", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({message}),
-                }).then((res => res.json()));
-        
-                return [data.message, ...messages!]
+                
+                const response = await axios.post<Message>('/api/addMessage', {
+                  message 
+                })
+          
+                return [response.data.message, ...messages!]
               
             } catch (error) {
                 console.error("Error adding message:", error);
