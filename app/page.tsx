@@ -4,7 +4,7 @@ import { Message } from "@/typings";
 
 
 export default async function Home() {
-  const data = await fetch (`${URL}/api/getMessages`).then((res) => res.json())
+  const data = await fetch (`${process.env.APP_URL}/api/getMessages`).then((res) => res.json())
 
   const messages: Message[] = data.messages
   return (
