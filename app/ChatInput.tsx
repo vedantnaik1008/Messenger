@@ -19,7 +19,8 @@ const ChatInput = () => {
     const User = user?.imageUrl || ""
     const emailAddress = user?.emailAddresses[0].emailAddress;
     const addMessage = async(e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        try {
+          e.preventDefault();
 
         if(!input) return;   
 
@@ -58,6 +59,9 @@ const ChatInput = () => {
         optimisticData: [message, ...messages!],
         rollbackOnError: true,
        })
+        } catch (error) {
+          console.error(error) 
+        }
     }
     
   return (
