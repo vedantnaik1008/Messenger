@@ -4,20 +4,19 @@ import { FormEvent, useState } from "react"
 import {v4 as uuid} from 'uuid'
 import  useSWR  from "swr"
 import fetcher from "@/utils/fetchMessages"
-import { useUser } from "@clerk/nextjs";
 import axios from "axios"
-
+import { useUser } from "@clerk/nextjs";
 
 
 const ChatInput = () => {
     const [input, setInput] = useState('')
-
+    const { user } = useUser();
     const {data: messages, error, mutate} = useSWR("/api/getMessages", fetcher)
-    console.log(messages);
     
-    const { isLoaded, isSignedIn, user } = useUser();
     const User = user?.imageUrl || ""
     const emailAddress = user?.emailAddresses[0].emailAddress;
+
+    console.log(messages);
     const addMessage = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -39,7 +38,8 @@ const ChatInput = () => {
         }
 
         console.log(user?.emailAddresses);
-        
+        console.log(user);
+
         const uploadMessageToUpstash = async () => {
             try {
                 
