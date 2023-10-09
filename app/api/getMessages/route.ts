@@ -17,7 +17,7 @@ import { NextResponse } from "next/server";
         return new NextResponse("Unauthorized", { status: 401 });
       }
       const messagesRes = await redis.hvals("messages")
-      const messages: Message[] = messagesRes.map((message) => JSON.parse(message)).sort((a, b) => a.created_at - b.created_at)
+      const messages: Message[] = messagesRes.map((message) => JSON.parse(message)).sort((a, b) => b.created_at - a.created_at)
 
       return NextResponse.json({ messages });
     } catch (error) {

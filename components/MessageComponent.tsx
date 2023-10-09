@@ -17,17 +17,9 @@ const MessageComponent = ({ message }: Props) => {
   const isCurrentUser = user?.emailAddresses[0].emailAddress === message.email;
   const mess = message.profilePic;
   console.log(mess, "mess");
-  
-  const userImage = isCurrentUser ? user?.imageUrl :  mess;
+  const userImage = isCurrentUser ? user?.imageUrl : mess;
     
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => {
-      setHydrated(true);
-  }, []);
-  if (!hydrated) {
-      // Returns null on first render, so the client and server match
-      return null;
-  }
+  
 
     return (
       <div className={`flex w-full ${isCurrentUser ? "justify-end" : ""}`}>
