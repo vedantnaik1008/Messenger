@@ -4,17 +4,19 @@ import { FormEvent, useState } from "react"
 import {v4 as uuid} from 'uuid'
 import  useSWR  from "swr"
 import fetcher from "@/utils/fetchMessages"
+import axios from "axios"
 import { useUser } from "@clerk/nextjs";
+
 
 const ChatInput = () => {
     const [input, setInput] = useState('')
-
+    const { user } = useUser();
     const {data: messages, error, mutate} = useSWR("/api/getMessages", fetcher)
-    console.log(messages);
     
-    const { isLoaded, isSignedIn, user } = useUser();
     const User = user?.imageUrl || ""
     const emailAddress = user?.emailAddresses[0].emailAddress;
+
+    console.log(messages);
     const addMessage = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -36,16 +38,16 @@ const ChatInput = () => {
         }
 
         console.log(user?.emailAddresses);
-        
+        console.log(user);
+
         const uploadMessageToUpstash = async () => {
             try {
-                const data = await fetch("/api/addMessage", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({message}),
-                }).then((res => res.json()));
-        
-                return [data.message, ...messages!]
+                
+                const response = await axios.post<Message>('/api/addMessage', {
+                  message 
+                })
+          
+                return [response.data.message, ...messages!]
               
             } catch (error) {
                 console.error("Error adding message:", error);

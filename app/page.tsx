@@ -4,9 +4,9 @@ import { Message } from "@/typings";
 
 
 export default async function Home() {
-  const data = await fetch (`${process.env.VERCEL_URL}/api/getMessages`).then((res) => res.json())
+  const data = await fetch (`${process.env.APP_URL}/api/getMessages`).then((res) => res.json())
 
-  const messages: Message[] = data.messages
+  const messages: Message[] = data ? data.messages : []
   return (
     <main className="">
       <MessageList initialMessages={messages} />
